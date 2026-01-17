@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resume Builder - Hobbies</title>
+
+<style>
+body{
+  margin:0;
+  background:#f5f5f5;
+  font-family:Arial, sans-serif;
+}
+
+.header{
+  background:#3f51b5;
+  color:#fff;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.container{
+  width:70%;
+  margin:40px auto;
+  background:#fff;
+  padding:30px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.container h3{
+  text-align:center;
+  border-bottom:1px solid #ddd;
+  padding-bottom:10px;
+}
+
+textarea{
+  width:100%;
+  height:150px;
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  margin-top:20px;
+  font-size:14px;
+}
+
+.buttons{
+  margin-top:30px;
+  text-align:center;
+}
+
+button{
+  background:#e91e63;
+  color:#fff;
+  border:none;
+  padding:10px 25px;
+  border-radius:4px;
+  cursor:pointer;
+  margin:0 10px;
+}
+
+.page{
+  text-align:center;
+  color:#777;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>Resume Builder</h2>
+  <span>LOGIN</span>
+</div>
+
+<div class="container">
+  <h3>Hobbies</h3>
+
+  <textarea id="hobbies" placeholder="Enter your hobbies (comma separated or lines)"></textarea>
+
+  <div class="buttons">
+    <button type="button" onclick="goBack()">&lt; BACK</button>
+    <button type="button" onclick="goNext()">NEXT &gt;</button>
+  </div>
+
+  <div class="page">Page 5</div>
+</div>
+
+<script>
+  // Load hobbies when page opens
+  window.onload = function () {
+    const savedHobbies = localStorage.getItem("hobbies");
+    if (savedHobbies) {
+      document.getElementById("hobbies").value = savedHobbies;
+    }
+  };
+
+  function saveHobbies() {
+    localStorage.setItem(
+      "hobbies",
+      document.getElementById("hobbies").value
+    );
+  }
+
+  function goBack() {
+    saveHobbies();
+    window.location.href = "/experience";
+  }
+
+  function goNext() {
+    saveHobbies();
+    window.location.href = "/others";
+  }
+</script>
+
+</body>
+</html>

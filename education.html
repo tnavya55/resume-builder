@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resume Builder - Education</title>
+<style>
+/* your exact CSS here — no changes */
+*{
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+  margin:0;
+  background:#f5f5f5;
+}
+
+.header{
+  background:#3f51b5;
+  color:#fff;
+  padding:15px 30px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.header h2{
+  margin:0;
+  font-size:20px;
+}
+
+.card{
+  width:80%;
+  margin:40px auto;
+  background:#fff;
+  padding:30px;
+  border-radius:4px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card h3{
+  text-align:center;
+  margin-bottom:30px;
+  border-bottom:1px solid #ddd;
+  padding-bottom:10px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap:20px;
+  margin-bottom:15px;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns: 1fr 2fr;
+  gap:20px;
+  margin-bottom:30px;
+}
+
+.input-group{
+  position:relative;
+}
+
+.input-group input{
+  width:100%;
+  padding:12px 40px 12px 12px;
+  border:1px solid #ccc;
+  border-radius:4px;
+}
+
+.input-group span{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.back,.next{
+  background:#e91e63;
+  color:#fff;
+  padding:10px 25px;
+  border:none;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.page{
+  text-align:center;
+  margin-top:15px;
+  color:#777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>Resume Builder</h2>
+  <span>LOGIN</span>
+</div>
+
+<div class="card">
+  <h3>Education Details</h3>
+
+  <!-- COLLEGE -->
+  <div class="grid">
+    <div class="input-group">
+      <input id="college" type="text" placeholder="College / University *">
+      <span>🎓</span>
+    </div>
+    <div class="input-group">
+      <input id="college_from" type="text" placeholder="dd-mm-yyyy">
+      <span>📅</span>
+    </div>
+    <div class="input-group">
+      <input id="college_to" type="text" placeholder="dd-mm-yyyy">
+      <span>📅</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="input-group">
+      <input id="college_qualification" type="text" placeholder="Qualification *">
+    </div>
+    <div class="input-group">
+      <input id="college_desc" type="text" placeholder="Description *">
+    </div>
+  </div>
+
+  <!-- SCHOOL -->
+  <div class="grid">
+    <div class="input-group">
+      <input id="school" type="text" placeholder="School *">
+      <span>🎓</span>
+    </div>
+    <div class="input-group">
+      <input id="school_from" type="text" placeholder="dd-mm-yyyy">
+      <span>📅</span>
+    </div>
+    <div class="input-group">
+      <input id="school_to" type="text" placeholder="dd-mm-yyyy">
+      <span>📅</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="input-group">
+      <input id="school_qualification" type="text" placeholder="Qualification *">
+    </div>
+    <div class="input-group">
+      <input id="school_desc" type="text" placeholder="Description *">
+    </div>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="buttons">
+    <button class="back" onclick="window.location.href='/personal'">Back</button>
+    <button class="next" type="button">NEXT</button>
+  </div>
+
+  <div class="page">Page 2</div>
+</div>
+
+<script>
+  // Load saved education data
+  window.onload = function() {
+    const edu = JSON.parse(localStorage.getItem("education")) || {};
+    college.value = edu.college || "";
+    college_from.value = edu.college_from || "";
+    college_to.value = edu.college_to || "";
+    college_qualification.value = edu.college_qualification || "";
+    college_desc.value = edu.college_desc || "";
+
+    school.value = edu.school || "";
+    school_from.value = edu.school_from || "";
+    school_to.value = edu.school_to || "";
+    school_qualification.value = edu.school_qualification || "";
+    school_desc.value = edu.school_desc || "";
+  };
+
+  // Save education data and go to Project page
+  document.querySelector(".next").onclick = function() {
+    const eduData = {
+      college: college.value,
+      college_from: college_from.value,
+      college_to: college_to.value,
+      college_qualification: college_qualification.value,
+      college_desc: college_desc.value,
+
+      school: school.value,
+      school_from: school_from.value,
+      school_to: school_to.value,
+      school_qualification: school_qualification.value,
+      school_desc: school_desc.value
+    };
+    localStorage.setItem("education", JSON.stringify(eduData));
+
+    // Navigate to Project page
+    window.location.href = "/project";
+  };
+</script>
+
+</body>
+</html>
