@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>My Resume</title>
+</head>
+
+<body>
+
+<h1 id="name"></h1>
+
+<ul>
+  <li id="email"></li>
+  <li><a id="website" target="_blank"></a></li>
+  <li><a id="github" target="_blank"></a></li>
+  <li><a id="linkedin" target="_blank"></a></li>
+  <li><a id="twitter" target="_blank"></a></li>
+  <li><a id="facebook" target="_blank"></a></li>
+  <li><a id="instagram" target="_blank"></a></li>
+</ul>
+
+<script>
+const personal = JSON.parse(localStorage.getItem("personal"));
+
+if (personal) {
+  document.getElementById("name").innerText =
+    (personal.fname || "") + " " + (personal.lname || "");
+
+  document.getElementById("email").innerText = personal.email || "";
+
+  setLink("website", personal.website);
+  setLink("github", personal.github);
+  setLink("linkedin", personal.linkedin);
+  setLink("twitter", personal.twitter);
+  setLink("facebook", personal.facebook);
+  setLink("instagram", personal.instagram);
+}
+
+function setLink(id, value) {
+  if (value) {
+    const el = document.getElementById(id);
+    el.href = value;
+    el.innerText = value;
+  }
+}
+</script>
+
+</body>
+</html>
