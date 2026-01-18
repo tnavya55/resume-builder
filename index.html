@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <title>Resume Builder - Personal</title>
 
-  <!-- Font Awesome 4.7 -->
+  <!-- Font Awesome -->
   <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- Your CSS -->
-<link rel="stylesheet" href="style.css">
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -25,6 +25,7 @@
   <h3>Personal Details</h3>
 
   <div class="form-grid">
+
     <div class="input-box">
       <input type="text" id="fname" placeholder="First Name *">
     </div>
@@ -72,67 +73,55 @@
       <input type="text" id="instagram" placeholder="Instagram">
       <i class="fa fa-instagram"></i>
     </div>
+
   </div>
 
   <div class="buttons">
-    <!-- Optional BACK button can go to home or index -->
     <button class="back" type="button" onclick="window.history.back()">‹ BACK</button>
-    <button class="next" type="button">NEXT ›</button>
+    <button class="next" type="button" onclick="saveAndNext()">NEXT ›</button>
   </div>
 
   <p class="page">Page 1</p>
 </div>
 
 <script>
-  // Load saved personal data from localStorage
+  // LOAD DATA
   window.onload = function () {
     const data = JSON.parse(localStorage.getItem("personal"));
     if (data) {
-      document.getElementById("fname").value = data.fname || "";
-      document.getElementById("lname").value = data.lname || "";
-      document.getElementById("email").value = data.email || "";
-      document.getElementById("phone").value = data.phone || "";
-      document.getElementById("website").value = data.website || "";
-      document.getElementById("github").value = data.github || "";
-      document.getElementById("linkedin").value = data.linkedin || "";
-      document.getElementById("twitter").value = data.twitter || "";
-      document.getElementById("facebook").value = data.facebook || "";
-      document.getElementById("instagram").value = data.instagram || "";
+      fname.value = data.fname || "";
+      lname.value = data.lname || "";
+      email.value = data.email || "";
+      phone.value = data.phone || "";
+      website.value = data.website || "";
+      github.value = data.github || "";
+      linkedin.value = data.linkedin || "";
+      twitter.value = data.twitter || "";
+      facebook.value = data.facebook || "";
+      instagram.value = data.instagram || "";
     }
   };
 
-  // Save personal data and go to Education page
-  document.querySelector(".next").onclick = function () {
+  // SAVE DATA
+  function saveAndNext() {
     const personalData = {
-      fname: document.getElementById("fname").value,
-      lname: document.getElementById("lname").value,
-      email: document.getElementById("email").value,
-      phone: document.getElementById("phone").value,
-      website: document.getElementById("website").value,
-      github: document.getElementById("github").value,
-      linkedin: document.getElementById("linkedin").value,
-      twitter: document.getElementById("twitter").value,
-      facebook: document.getElementById("facebook").value,
-      instagram: document.getElementById("instagram").value
+      fname: fname.value,
+      lname: lname.value,
+      email: email.value,
+      phone: phone.value,
+      website: website.value,
+      github: github.value,
+      linkedin: linkedin.value,
+      twitter: twitter.value,
+      facebook: facebook.value,
+      instagram: instagram.value
     };
 
-    localStorage.setItem("index", JSON.stringify(personalData));
+    localStorage.setItem("personal", JSON.stringify(personalData));
 
-    // Navigate to Education page
     window.location.href = "education.html";
-  };
+  }
 </script>
 
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
