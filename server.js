@@ -7,11 +7,11 @@ const PORT = 3000;
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "personal.html"));
+  res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
 app.get("/personal", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "personal.html"));
+  res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
 app.get("/education", (req, res) => {
@@ -35,4 +35,5 @@ app.get("/others", (req, res) => {
 });
 app.listen(PORT, () => {
   console.log("Server running at http://localhost:3000");
+
 });
