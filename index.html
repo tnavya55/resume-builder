@@ -1,126 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Resume Builder - Personal</title>
+<meta charset="UTF-8">
+<title>Resume Builder - Personal</title>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <i class="fa fa-bars"></i>
   <h2>Resume Builder</h2>
-  <button class="login">LOGIN</button>
 </div>
 
-<!-- CARD -->
 <div class="card">
   <h3>Personal Details</h3>
 
-  <div class="form-grid">
+  <input id="fname" placeholder="First Name">
+  <input id="lname" placeholder="Last Name">
+  <input id="email" placeholder="Email">
+  <input id="phone" placeholder="Phone Number">
+  <input id="website" placeholder="Website">
+  <input id="github" placeholder="GitHub">
+  <input id="linkedin" placeholder="LinkedIn">
+  <input id="twitter" placeholder="Twitter">
+  <input id="facebook" placeholder="Facebook">
+  <input id="instagram" placeholder="Instagram">
 
-    <div class="input-box">
-      <input type="text" id="fname" placeholder="First Name *">
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="lname" placeholder="Last Name *">
-    </div>
-
-    <div class="input-box">
-      <input type="email" id="email" placeholder="Email *">
-      <i class="fa fa-envelope"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="phone" placeholder="Phone Number">
-      <i class="fa fa-phone"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="website" placeholder="Your Website">
-      <i class="fa fa-globe"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="github" placeholder="GitHub">
-      <i class="fa fa-github"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="linkedin" placeholder="LinkedIn">
-      <i class="fa fa-linkedin"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="twitter" placeholder="Twitter">
-      <i class="fa fa-twitter"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="facebook" placeholder="Facebook">
-      <i class="fa fa-facebook"></i>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="instagram" placeholder="Instagram">
-      <i class="fa fa-instagram"></i>
-    </div>
-
-  </div>
-
-  <div class="buttons">
-    <button class="back" type="button" onclick="window.history.back()">‹ BACK</button>
-    <button class="next" type="button" onclick="saveAndNext()">NEXT ›</button>
-  </div>
-
-  <p class="page">Page 1</p>
+  <button onclick="saveData()">NEXT</button>
 </div>
 
 <script>
-  // LOAD DATA
-  window.onload = function () {
-    const data = JSON.parse(localStorage.getItem("personal"));
-    if (data) {
-      fname.value = data.fname || "";
-      lname.value = data.lname || "";
-      email.value = data.email || "";
-      phone.value = data.phone || "";
-      website.value = data.website || "";
-      github.value = data.github || "";
-      linkedin.value = data.linkedin || "";
-      twitter.value = data.twitter || "";
-      facebook.value = data.facebook || "";
-      instagram.value = data.instagram || "";
-    }
+function saveData() {
+  const personal = {
+    fname: fname.value,
+    lname: lname.value,
+    email: email.value,
+    phone: phone.value,
+    website: website.value,
+    github: github.value,
+    linkedin: linkedin.value,
+    twitter: twitter.value,
+    facebook: facebook.value,
+    instagram: instagram.value
   };
 
-  // SAVE DATA
-  function saveAndNext() {
-    const personalData = {
-      fname: fname.value,
-      lname: lname.value,
-      email: email.value,
-      phone: phone.value,
-      website: website.value,
-      github: github.value,
-      linkedin: linkedin.value,
-      twitter: twitter.value,
-      facebook: facebook.value,
-      instagram: instagram.value
-    };
+  localStorage.setItem("personal", JSON.stringify(personal));
 
-    localStorage.setItem("personal", JSON.stringify(personalData));
-
-    window.location.href = "education.html";
-  }
+  // move to resume page
+  window.location.href = "resume.html";
+}
 </script>
 
 </body>
