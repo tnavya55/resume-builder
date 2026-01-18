@@ -4,6 +4,91 @@
 <meta charset="UTF-8">
 <title>Resume Builder - Personal</title>
 
+<link rel="stylesheet" href="public/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+<div class="header">
+  <i class="fa fa-bars"></i>
+  <h2>Resume Builder</h2>
+  <button class="login">LOGIN</button>
+</div>
+
+<div class="card">
+  <h3>Personal Details</h3>
+
+  <div class="form-grid">
+    <div class="input-box"><input type="text" id="fname" placeholder="First Name *"></div>
+    <div class="input-box"><input type="text" id="lname" placeholder="Last Name *"></div>
+    <div class="input-box"><input type="email" id="email" placeholder="Email *"><i class="fa fa-envelope"></i></div>
+    <div class="input-box"><input type="text" id="phone" placeholder="Phone Number"><i class="fa fa-phone"></i></div>
+    <div class="input-box"><input type="text" id="website" placeholder="Your Website"><i class="fa fa-globe"></i></div>
+    <div class="input-box"><input type="text" id="github" placeholder="GitHub"><i class="fa fa-github"></i></div>
+    <div class="input-box"><input type="text" id="linkedin" placeholder="LinkedIn"><i class="fa fa-linkedin"></i></div>
+    <div class="input-box"><input type="text" id="twitter" placeholder="Twitter"><i class="fa fa-twitter"></i></div>
+    <div class="input-box"><input type="text" id="facebook" placeholder="Facebook"><i class="fa fa-facebook"></i></div>
+    <div class="input-box"><input type="text" id="instagram" placeholder="Instagram"><i class="fa fa-instagram"></i></div>
+  </div>
+
+  <div class="buttons">
+    <button class="back" type="button" onclick="window.history.back()">‹ BACK</button>
+    <button class="next" type="button">NEXT ›</button>
+  </div>
+
+  <p class="page">Page 1</p>
+</div>
+
+<script>
+window.onload = function () {
+  const data = JSON.parse(localStorage.getItem("personal"));
+  if (data) {
+    fname.value = data.fname || "";
+    lname.value = data.lname || "";
+    email.value = data.email || "";
+    phone.value = data.phone || "";
+    website.value = data.website || "";
+    github.value = data.github || "";
+    linkedin.value = data.linkedin || "";
+    twitter.value = data.twitter || "";
+    facebook.value = data.facebook || "";
+    instagram.value = data.instagram || "";
+  }
+};
+
+document.querySelector(".next").onclick = function () {
+  const personalData = {
+    fname: fname.value,
+    lname: lname.value,
+    email: email.value,
+    phone: phone.value,
+    website: fixUrl(website.value),
+    github: fixUrl(github.value),
+    linkedin: fixUrl(linkedin.value),
+    twitter: fixUrl(twitter.value),
+    facebook: fixUrl(facebook.value),
+    instagram: fixUrl(instagram.value)
+  };
+
+  localStorage.setItem("personal", JSON.stringify(personalData));
+  window.location.href = "education.html";
+};
+
+function fixUrl(url) {
+  if (!url) return "";
+  url = url.trim();
+  if (url.startsWith("http://") || url.startsWith("https://")) return url;
+  return "https://" + url;
+}
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resume Builder - Personal</title>
+
 <!-- Font Awesome 4.7 -->
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -257,4 +342,5 @@ document.querySelector(".next").onclick = function () {
 
 </body>
 </html>
+
 
