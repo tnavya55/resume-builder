@@ -10,7 +10,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-app.get("/personal", (req, res) => {
+app.get("/index", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
@@ -37,3 +37,4 @@ app.listen(PORT, () => {
   console.log("Server running at http://localhost:3000");
 
 });
+
