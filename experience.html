@@ -133,7 +133,21 @@ document.getElementById("backBtn").onclick = function () {
 
 /* NEXT BUTTON */
 document.getElementById("nextBtn").onclick = function () {
+  // Validate required fields
+  const requiredFields = [company, role, startDate, workDesc];
+  for(let field of requiredFields){
+    if(!field.checkValidity()){
+      field.reportValidity();
+      return;
+    }
+  }
+
+  // Save temporarily
   saveExperience();
+
+  // Simulate download: delete saved data after this
+  localStorage.removeItem("experience");
+
   window.location.href = "hobbies.html";
 };
 </script>
@@ -141,4 +155,3 @@ document.getElementById("nextBtn").onclick = function () {
 </body>
 
 </html>
-
