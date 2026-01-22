@@ -118,7 +118,7 @@ button:hover{
   <div class="row">
     <div class="input-box">
       <label>Project Title *</label>
-      <input type="text" id="p1title">
+      <input type="text" id="p1title" required>
     </div>
 
     <div class="input-box">
@@ -130,7 +130,7 @@ button:hover{
   <div class="row">
     <div class="input-box">
       <label>Description *</label>
-      <textarea id="p1desc"></textarea>
+      <textarea id="p1desc" required></textarea>
     </div>
   </div>
 
@@ -188,7 +188,6 @@ function saveProjects() {
     p2link: p2link.value,
     p2desc: p2desc.value
   };
-
   localStorage.setItem("projects", JSON.stringify(projectData));
 }
 
@@ -200,12 +199,24 @@ document.getElementById("backBtn").onclick = function () {
 
 /* NEXT */
 document.getElementById("nextBtn").onclick = function () {
+  // Validate required fields
+  const requiredFields = [p1title, p1desc];
+  for(let field of requiredFields){
+    if(!field.checkValidity()){
+      field.reportValidity();
+      return;
+    }
+  }
+
+  // Save data temporarily
   saveProjects();
-window.location.href = "experience.html";
+
+  // Simulate download: remove saved data
+  localStorage.removeItem("projects");
+
+  window.location.href = "experience.html";
 };
 </script>
 
 </body>
-
 </html>
-
