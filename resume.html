@@ -19,13 +19,23 @@
   <li><a id="instagram" target="_blank"></a></li>
 </ul>
 
+<!-- Download button -->
+<button id="downloadBtn">Download Resume PDF</button>
+
+<!-- PDF library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script>
 const personal = JSON.parse(localStorage.getItem("personal"));
 
-if (personal) {
+// Validate required fields
+if (!personal || !personal.fname || !personal.lname || !personal.email) {
+  alert("Required personal details missing!");
+  // Redirect back to personal input page
+  window.location.href = "index.html";
+} else {
   document.getElementById("name").innerText =
     (personal.fname || "") + " " + (personal.lname || "");
-
   document.getElementById("email").innerText = personal.email || "";
 
   setLink("website", personal.website);
@@ -43,6 +53,17 @@ function setLink(id, value) {
     el.innerText = value;
   }
 }
+
+// Download PDF and delete saved data
+document.getElementById("downloadBtn").onclick = function() {
+  const element = document.body;
+
+  html2pdf().from(element).save("My_Resume.pdf").then(() => {
+    // Delete saved personal data after download
+    localStorage.removeItem("personal");
+    alert("Personal data cleared from storage after download.");
+  });
+};
 </script>
 
 </body>
