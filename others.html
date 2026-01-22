@@ -3,175 +3,111 @@
 <head>
 <meta charset="UTF-8">
 <title>Resume Builder - Others</title>
-
 <style>
-body{
-  margin:0;
-  background:#f5f5f5;
-  font-family:Arial, sans-serif;
-}
-
-.navbar{
-  background:#3f51b5;
-  color:#fff;
-  padding:15px 30px;
-  font-size:20px;
-}
-
-.container{
-  width:80%;
-  margin:40px auto;
-  background:#fff;
-  padding:30px;
-  border-radius:6px;
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-}
-
-h2{
-  color:#333;
-  margin-bottom:20px;
-}
-
-textarea{
-  width:100%;
-  height:120px;
-  padding:10px;
-  font-size:16px;
-  border-radius:4px;
-  border:1px solid #ccc;
-  resize:none;
-}
-
-.buttons{
-  display:flex;
-  justify-content:space-between;
-  margin-top:30px;
-}
-
-button{
-  padding:10px 25px;
-  border:none;
-  border-radius:4px;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.back{
-  background:#9e9e9e;
-  color:white;
-}
-
-.download{
-  background:#4caf50;
-  color:white;
-}
+body{margin:0;font-family:Arial,sans-serif;background:#f5f5f5;}
+.navbar{background:#3f51b5;color:#fff;padding:15px 30px;font-size:20px;}
+.container{width:80%;margin:40px auto;background:#fff;padding:30px;border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+textarea{width:100%;height:120px;padding:10px;font-size:16px;border-radius:4px;border:1px solid #ccc;resize:none;}
+.buttons{display:flex;justify-content:space-between;margin-top:30px;}
+button{padding:10px 25px;border:none;border-radius:4px;font-size:16px;cursor:pointer;}
+.back{background:#9e9e9e;color:white;}
+.download{background:#4caf50;color:white;}
 </style>
 </head>
-
 <body>
 
-<div class="navbar">
-  Resume Builder – Others
-</div>
+<div class="navbar">Resume Builder – Others</div>
 
 <div class="container">
   <h2>Other Details</h2>
-
-  <textarea id="others"
-    placeholder="Certifications, Achievements, Languages, Strengths..." required></textarea>
-
+  <textarea id="others" placeholder="Certifications, Achievements, Languages, Strengths..." required></textarea>
   <div class="buttons">
     <button class="back" type="button" onclick="goBack()">Back</button>
     <button class="download" type="button" onclick="downloadPDF()">Download PDF</button>
   </div>
 </div>
 
-<!-- PDF library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
 <script>
-  // Load saved others data
-  window.onload = function () {
-    const saved = localStorage.getItem("others");
-    if (saved) {
-      document.getElementById("others").value = saved;
-    }
-  };
+window.onload = function(){
+  const saved = localStorage.getItem("others");
+  if(saved) document.getElementById("others").value = saved;
+};
 
-  function saveOthers() {
-    localStorage.setItem(
-      "others",
-      document.getElementById("others").value
-    );
-  }
+function saveOthers(){
+  const val = document.getElementById("others").value;
+  if(!val){ alert("Please enter your other details!"); return false; }
+  localStorage.setItem("others", val);
+  return true;
+}
 
-  function goBack() {
-    saveOthers();
-    window.location.href = "hobbies.html";
-  }
+function goBack(){
+  saveOthers();
+  window.location.href = "hobbies.html";
+}
 
-  function downloadPDF() {
-    const othersField = document.getElementById("others");
-    if(!othersField.checkValidity()){
-      othersField.reportValidity();
-      return; // stop if required field is empty
-    }
+function downloadPDF(){
+  if(!saveOthers()) return;
 
-    saveOthers();
+  const personal   = JSON.parse(localStorage.getItem("personal"))   || {};
+  const education  = JSON.parse(localStorage.getItem("education"))  || {};
+  const projects   = JSON.parse(localStorage.getItem("projects"))   || {};
+  const experience = JSON.parse(localStorage.getItem("experience")) || {};
+  const hobbies    = localStorage.getItem("hobbies") || "";
+  const others     = localStorage.getItem("others") || "";
 
-    const personal   = JSON.parse(localStorage.getItem("personal"))   || {};
-    const education  = JSON.parse(localStorage.getItem("education"))  || {};
-    const projects   = JSON.parse(localStorage.getItem("projects"))   || {};
-    const experience = JSON.parse(localStorage.getItem("experience")) || {};
-    const hobbies    = localStorage.getItem("hobbies") || "";
-    const others     = localStorage.getItem("others") || "";
+  const resume = document.createElement("div");
+  resume.style.padding = "20px";
+  resume.style.fontFamily = "Arial";
 
-    const resume = document.createElement("div");
-    resume.style.padding = "20px";
-    resume.style.fontFamily = "Arial";
+  resume.innerHTML = `
+    <h1>${personal.fname || ""} ${personal.lname || ""}</h1>
+    <p>Email: ${personal.email || ""} | Phone: ${personal.phone || ""}</p>
+    <p>Website: ${personal.website || ""}</p>
+    <p>GitHub: ${projects.github || personal.github || ""}</p>
+    <p>LinkedIn: ${personal.linkedin || ""}</p>
+    <hr>
 
-    resume.innerHTML = `
-      <h1>${personal.fname || ""} ${personal.lname || ""}</h1>
-      <p>
-        ${personal.email || ""} |
-        ${personal.phone || ""}
-      </p>
-      <hr>
+    <h2>Education</h2>
+    <p><strong>${education.college || ""}</strong> (${education.college_from || ""} - ${education.college_to || ""})</p>
+    <p>${education.college_qualification || ""}</p>
+    <p>${education.college_desc || ""}</p>
 
-      <h2>Education</h2>
-      <p><strong>${education.college || ""}</strong></p>
-      <p>${education.college_qualification || ""}</p>
-      <p>${education.college_desc || ""}</p>
+    <p><strong>${education.school || ""}</strong> (${education.school_from || ""} - ${education.school_to || ""})</p>
+    <p>${education.school_qualification || ""}</p>
+    <p>${education.school_desc || ""}</p>
 
-      <h2>Projects</h2>
-      <p><strong>${projects.p1title || ""}</strong></p>
-      <p>${projects.p1desc || ""}</p>
+    <h2>Projects</h2>
+    <p><strong>${projects.p1title || ""}</strong> - ${projects.p1link || ""}</p>
+    <p>${projects.p1desc || ""}</p>
+    <p><strong>${projects.p2title || ""}</strong> - ${projects.p2link || ""}</p>
+    <p>${projects.p2desc || ""}</p>
 
-      <h2>Experience</h2>
-      <p><strong>${experience.company || ""}</strong></p>
-      <p>${experience.role || ""}</p>
-      <p>${experience.workDesc || ""}</p>
+    <h2>Experience</h2>
+    <p><strong>${experience.company || ""}</strong> (${experience.startDate || ""} - ${experience.endDate || ""})</p>
+    <p>Role: ${experience.role || ""}</p>
+    <p>${experience.workDesc || ""}</p>
 
-      <h2>Hobbies</h2>
-      <p>${hobbies}</p>
+    <h2>Hobbies</h2>
+    <p>${hobbies}</p>
 
-      <h2>Other Details</h2>
-      <p>${others}</p>
-    `;
+    <h2>Other Details</h2>
+    <p>${others}</p>
+  `;
 
-    html2pdf().from(resume).save("My_Resume.pdf").then(() => {
-      // Delete all saved data after download
-      localStorage.removeItem("personal");
-      localStorage.removeItem("education");
-      localStorage.removeItem("projects");
-      localStorage.removeItem("experience");
-      localStorage.removeItem("hobbies");
-      localStorage.removeItem("others");
-      alert("All data cleared from storage after download.");
-    });
-  }
+  html2pdf().from(resume).save("My_Resume.pdf").then(()=>{
+    // Delete all data after download
+    localStorage.removeItem("personal");
+    localStorage.removeItem("education");
+    localStorage.removeItem("projects");
+    localStorage.removeItem("experience");
+    localStorage.removeItem("hobbies");
+    localStorage.removeItem("others");
+    alert("Data cleared after PDF download!");
+    window.location.href = "index.html"; // redirect to first page
+  });
+}
 </script>
 
 </body>
-
 </html>
