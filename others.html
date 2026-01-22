@@ -78,7 +78,7 @@ button{
   <h2>Other Details</h2>
 
   <textarea id="others"
-    placeholder="Certifications, Achievements, Languages, Strengths..."></textarea>
+    placeholder="Certifications, Achievements, Languages, Strengths..." required></textarea>
 
   <div class="buttons">
     <button class="back" type="button" onclick="goBack()">Back</button>
@@ -111,6 +111,12 @@ button{
   }
 
   function downloadPDF() {
+    const othersField = document.getElementById("others");
+    if(!othersField.checkValidity()){
+      othersField.reportValidity();
+      return; // stop if required field is empty
+    }
+
     saveOthers();
 
     const personal   = JSON.parse(localStorage.getItem("personal"))   || {};
@@ -144,7 +150,7 @@ button{
       <h2>Experience</h2>
       <p><strong>${experience.company || ""}</strong></p>
       <p>${experience.role || ""}</p>
-      <p>${experience.work || ""}</p>
+      <p>${experience.workDesc || ""}</p>
 
       <h2>Hobbies</h2>
       <p>${hobbies}</p>
@@ -153,11 +159,19 @@ button{
       <p>${others}</p>
     `;
 
-    html2pdf().from(resume).save("My_Resume.pdf");
+    html2pdf().from(resume).save("My_Resume.pdf").then(() => {
+      // Delete all saved data after download
+      localStorage.removeItem("personal");
+      localStorage.removeItem("education");
+      localStorage.removeItem("projects");
+      localStorage.removeItem("experience");
+      localStorage.removeItem("hobbies");
+      localStorage.removeItem("others");
+      alert("All data cleared from storage after download.");
+    });
   }
 </script>
 
 </body>
 
 </html>
-
