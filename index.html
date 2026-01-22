@@ -21,41 +21,41 @@
     <h3>Personal Details</h3>
     <div class="form-grid">
       <div class="input-box">
-        <input type="text" id="fname" placeholder="First Name *">
+        <input type="text" id="fname" placeholder="First Name *" required>
       </div>
       <div class="input-box">
-        <input type="text" id="lname" placeholder="Last Name *">
+        <input type="text" id="lname" placeholder="Last Name *" required>
       </div>
       <div class="input-box">
-        <input type="email" id="email" placeholder="Email *">
+        <input type="email" id="email" placeholder="Email *" required>
         <i class="fa fa-envelope"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="phone" placeholder="Phone Number">
+        <input type="text" id="phone" placeholder="Phone Number" required>
         <i class="fa fa-phone"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="website" placeholder="Your Website">
+        <input type="text" id="website" placeholder="Your Website" required>
         <i class="fa fa-globe"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="github" placeholder="GitHub">
+        <input type="text" id="github" placeholder="GitHub" required>
         <i class="fa fa-github"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="linkedin" placeholder="LinkedIn">
+        <input type="text" id="linkedin" placeholder="LinkedIn" required>
         <i class="fa fa-linkedin"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="twitter" placeholder="Twitter">
+        <input type="text" id="twitter" placeholder="Twitter" required>
         <i class="fa fa-twitter"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="facebook" placeholder="Facebook">
+        <input type="text" id="facebook" placeholder="Facebook" required>
         <i class="fa fa-facebook"></i>
       </div>
       <div class="input-box">
-        <input type="text" id="instagram" placeholder="Instagram">
+        <input type="text" id="instagram" placeholder="Instagram" required>
         <i class="fa fa-instagram"></i>
       </div>
     </div>
@@ -81,15 +81,27 @@
       }
     };
 
-    // Save personal data and go to Education page
+    // Save personal data, then navigate to Education page and delete localStorage
     document.querySelector(".next").onclick = () => {
       const fields = ["fname","lname","email","phone","website","github","linkedin","twitter","facebook","instagram"];
       const personalData = {};
-      fields.forEach(id => {
-        personalData[id] = document.getElementById(id).value;
-      });
 
+      // Check all required fields
+      for (let id of fields) {
+        const input = document.getElementById(id);
+        if (!input.checkValidity()) {
+          input.reportValidity();
+          return; // stop if any required field is empty
+        }
+        personalData[id] = input.value;
+      }
+
+      // Save data temporarily
       localStorage.setItem("personal", JSON.stringify(personalData));
+
+      // Simulate "download" here (user can actually save PDF/other page)
+      // After download, delete data
+      localStorage.removeItem("personal");
 
       // Navigate to Education page
       window.location.href = "education.html";
