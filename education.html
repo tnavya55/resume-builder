@@ -113,50 +113,50 @@ body{
   <!-- COLLEGE -->
   <div class="grid">
     <div class="input-group">
-      <input id="college" type="text" placeholder="College / University *">
+      <input id="college" type="text" placeholder="College / University *" required>
       <span>🎓</span>
     </div>
     <div class="input-group">
-      <input id="college_from" type="text" placeholder="dd-mm-yyyy">
+      <input id="college_from" type="text" placeholder="dd-mm-yyyy" required>
       <span>📅</span>
     </div>
     <div class="input-group">
-      <input id="college_to" type="text" placeholder="dd-mm-yyyy">
+      <input id="college_to" type="text" placeholder="dd-mm-yyyy" required>
       <span>📅</span>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="input-group">
-      <input id="college_qualification" type="text" placeholder="Qualification *">
+      <input id="college_qualification" type="text" placeholder="Qualification *" required>
     </div>
     <div class="input-group">
-      <input id="college_desc" type="text" placeholder="Description *">
+      <input id="college_desc" type="text" placeholder="Description *" required>
     </div>
   </div>
 
   <!-- SCHOOL -->
   <div class="grid">
     <div class="input-group">
-      <input id="school" type="text" placeholder="School *">
+      <input id="school" type="text" placeholder="School *" required>
       <span>🎓</span>
     </div>
     <div class="input-group">
-      <input id="school_from" type="text" placeholder="dd-mm-yyyy">
+      <input id="school_from" type="text" placeholder="dd-mm-yyyy" required>
       <span>📅</span>
     </div>
     <div class="input-group">
-      <input id="school_to" type="text" placeholder="dd-mm-yyyy">
+      <input id="school_to" type="text" placeholder="dd-mm-yyyy" required>
       <span>📅</span>
     </div>
   </div>
 
   <div class="grid-2">
     <div class="input-group">
-      <input id="school_qualification" type="text" placeholder="Qualification *">
+      <input id="school_qualification" type="text" placeholder="Qualification *" required>
     </div>
     <div class="input-group">
-      <input id="school_desc" type="text" placeholder="Description *">
+      <input id="school_desc" type="text" placeholder="Description *" required>
     </div>
   </div>
 
@@ -186,22 +186,27 @@ body{
     school_desc.value = edu.school_desc || "";
   };
 
-  // Save education data and go to Project page
+  // Save education data, check required, then delete after "download"
   document.querySelector(".next").onclick = function() {
-    const eduData = {
-      college: college.value,
-      college_from: college_from.value,
-      college_to: college_to.value,
-      college_qualification: college_qualification.value,
-      college_desc: college_desc.value,
+    const fields = ["college","college_from","college_to","college_qualification","college_desc",
+                    "school","school_from","school_to","school_qualification","school_desc"];
+    
+    for(let id of fields){
+      const input = document.getElementById(id);
+      if(!input.checkValidity()){
+        input.reportValidity();
+        return; // stop if any required field is empty
+      }
+    }
 
-      school: school.value,
-      school_from: school_from.value,
-      school_to: school_to.value,
-      school_qualification: school_qualification.value,
-      school_desc: school_desc.value
-    };
+    const eduData = {};
+    fields.forEach(id => eduData[id] = document.getElementById(id).value);
+
+    // Temporarily save in localStorage
     localStorage.setItem("education", JSON.stringify(eduData));
+
+    // Simulate download: after this, delete saved data
+    localStorage.removeItem("education");
 
     // Navigate to Project page
     window.location.href = "project.html";
@@ -211,5 +216,3 @@ body{
 </body>
 
 </html>
-
-
