@@ -77,7 +77,7 @@ button{
 <div class="container">
   <h3>Hobbies</h3>
 
-  <textarea id="hobbies" placeholder="Enter your hobbies (comma separated or lines)"></textarea>
+  <textarea id="hobbies" placeholder="Enter your hobbies (comma separated or lines)" required></textarea>
 
   <div class="buttons">
     <button type="button" onclick="goBack()">&lt; BACK</button>
@@ -97,10 +97,7 @@ button{
   };
 
   function saveHobbies() {
-    localStorage.setItem(
-      "hobbies",
-      document.getElementById("hobbies").value
-    );
+    localStorage.setItem("hobbies", document.getElementById("hobbies").value);
   }
 
   function goBack() {
@@ -109,7 +106,17 @@ button{
   }
 
   function goNext() {
+    const hobbiesField = document.getElementById("hobbies");
+    if(!hobbiesField.checkValidity()){
+      hobbiesField.reportValidity();
+      return; // stop if required field is empty
+    }
+
     saveHobbies();
+
+    // Simulate download: delete saved data
+    localStorage.removeItem("hobbies");
+
     window.location.href = "others.html";
   }
 </script>
@@ -117,4 +124,3 @@ button{
 </body>
 
 </html>
-
