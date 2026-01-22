@@ -1,111 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Resume Builder - Personal</title>
-  <!-- Font Awesome 4.7 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- Your CSS -->
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Resume Builder - Personal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
-  <div class="header">
-    <i class="fa fa-bars"></i>
-    <h2>Resume Builder</h2>
-    <button class="login">LOGIN</button>
+
+<div class="header">
+  <i class="fa fa-bars"></i>
+  <h2>Resume Builder</h2>
+  <button class="login">LOGIN</button>
+</div>
+
+<div class="card">
+  <h3>Personal Details</h3>
+  <div class="form-grid">
+    <div class="input-box">
+      <input type="text" id="fname" placeholder="First Name *" required>
+    </div>
+    <div class="input-box">
+      <input type="text" id="lname" placeholder="Last Name *" required>
+    </div>
+    <div class="input-box">
+      <input type="email" id="email" placeholder="Email *" required>
+      <i class="fa fa-envelope"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="phone" placeholder="Phone Number">
+      <i class="fa fa-phone"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="website" placeholder="Your Website">
+      <i class="fa fa-globe"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="github" placeholder="GitHub">
+      <i class="fa fa-github"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="linkedin" placeholder="LinkedIn">
+      <i class="fa fa-linkedin"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="twitter" placeholder="Twitter">
+      <i class="fa fa-twitter"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="facebook" placeholder="Facebook">
+      <i class="fa fa-facebook"></i>
+    </div>
+    <div class="input-box">
+      <input type="text" id="instagram" placeholder="Instagram">
+      <i class="fa fa-instagram"></i>
+    </div>
   </div>
 
-  <!-- CARD -->
-  <div class="card">
-    <h3>Personal Details</h3>
-    <div class="form-grid">
-      <div class="input-box">
-        <input type="text" id="fname" placeholder="First Name *" required>
-      </div>
-      <div class="input-box">
-        <input type="text" id="lname" placeholder="Last Name *" required>
-      </div>
-      <div class="input-box">
-        <input type="email" id="email" placeholder="Email *" required>
-        <i class="fa fa-envelope"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="phone" placeholder="Phone Number" required>
-        <i class="fa fa-phone"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="website" placeholder="Your Website" required>
-        <i class="fa fa-globe"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="github" placeholder="GitHub" required>
-        <i class="fa fa-github"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="linkedin" placeholder="LinkedIn" required>
-        <i class="fa fa-linkedin"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="twitter" placeholder="Twitter" required>
-        <i class="fa fa-twitter"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="facebook" placeholder="Facebook" required>
-        <i class="fa fa-facebook"></i>
-      </div>
-      <div class="input-box">
-        <input type="text" id="instagram" placeholder="Instagram" required>
-        <i class="fa fa-instagram"></i>
-      </div>
-    </div>
-
-    <div class="buttons">
-      <button class="back" type="button" onclick="window.history.back()">‹ BACK</button>
-      <button class="next" type="button">NEXT ›</button>
-    </div>
-
-    <p class="page">Page 1</p>
+  <div class="buttons">
+    <button class="back" type="button" onclick="window.history.back()">‹ BACK</button>
+    <button class="next" type="button">NEXT ›</button>
   </div>
 
-  <script>
-    // Load saved personal data
-    window.onload = () => {
-      const data = JSON.parse(localStorage.getItem("personal"));
-      if (data) {
-        Object.keys(data).forEach(key => {
-          if (document.getElementById(key)) {
-            document.getElementById(key).value = data[key];
-          }
-        });
-      }
-    };
+  <p class="page">Page 1</p>
+</div>
 
-    // Save personal data, then navigate to Education page and delete localStorage
-    document.querySelector(".next").onclick = () => {
-      const fields = ["fname","lname","email","phone","website","github","linkedin","twitter","facebook","instagram"];
-      const personalData = {};
+<script>
+window.onload = () => {
+  const data = JSON.parse(localStorage.getItem("personal"));
+  if(data){
+    Object.keys(data).forEach(id => {
+      if(document.getElementById(id)) document.getElementById(id).value = data[id];
+    });
+  }
+};
 
-      // Check all required fields
-      for (let id of fields) {
-        const input = document.getElementById(id);
-        if (!input.checkValidity()) {
-          input.reportValidity();
-          return; // stop if any required field is empty
-        }
-        personalData[id] = input.value;
-      }
+document.querySelector(".next").onclick = () => {
+  // Check required fields
+  const requiredFields = ["fname","lname","email"];
+  for(let id of requiredFields){
+    if(!document.getElementById(id).checkValidity()){
+      document.getElementById(id).reportValidity();
+      return;
+    }
+  }
 
-      // Save data temporarily
-      localStorage.setItem("personal", JSON.stringify(personalData));
+  // Save data
+  const personalData = {};
+  ["fname","lname","email","phone","website","github","linkedin","twitter","facebook","instagram"]
+  .forEach(id => personalData[id] = document.getElementById(id).value);
+  localStorage.setItem("personal", JSON.stringify(personalData));
 
-      // Simulate "download" here (user can actually save PDF/other page)
-      // After download, delete data
-      localStorage.removeItem("personal");
+  // Navigate
+  window.location.href = "education.html";
+};
+</script>
 
-      // Navigate to Education page
-      window.location.href = "education.html";
-    };
-  </script>
 </body>
 </html>
